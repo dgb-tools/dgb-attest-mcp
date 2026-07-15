@@ -1,0 +1,42 @@
+{
+  "name": "dgb-attest-mcp",
+  "version": "0.1.0",
+  "description": "On-chain attestation for the AI era: hash any content onto DigiByte via OP_RETURN — a permanent, timestamped, tamper-evident proof it existed. Verify anytime.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "digibyte",
+    "attestation",
+    "provenance",
+    "notarization",
+    "op_return",
+    "mcp",
+    "ai-agents",
+    "timestamping"
+  ],
+  "author": "Michael Emery",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "dgb-attest-mcp": "src/server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "mcpName": "io.github.dgb-tools/dgb-attest-mcp",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dgb-tools/dgb-attest-mcp.git"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.4.3"
+  }
+}

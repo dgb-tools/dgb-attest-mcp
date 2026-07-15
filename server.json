@@ -1,0 +1,25 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-07-09/server.schema.json",
+  "name": "io.github.dgb-tools/dgb-attest-mcp",
+  "description": "On-chain attestation for the AI era: hash any content onto DigiByte via OP_RETURN for permanent, timestamped, tamper-evident proof of existence. Verify anytime.",
+  "repository": {
+    "url": "https://github.com/dgb-tools/dgb-attest-mcp",
+    "source": "github"
+  },
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "dgb-attest-mcp",
+      "version": "0.1.0",
+      "transport": { "type": "stdio" },
+      "environmentVariables": [
+        { "name": "DGB_RPC_URL", "description": "DigiByte node JSON-RPC URL", "isRequired": true },
+        { "name": "DGB_RPC_USER", "description": "RPC username", "isRequired": true },
+        { "name": "DGB_RPC_PASSWORD", "description": "RPC password", "isRequired": true, "isSecret": true },
+        { "name": "DGB_WALLET", "description": "Wallet that pays attestation fees", "isRequired": true },
+        { "name": "ATTEST_ALLOW_MAINNET", "description": "Set true to attest on mainnet (default testnet-only)", "isRequired": false }
+      ]
+    }
+  ]
+}
