@@ -40,6 +40,21 @@ true`), and a one-character edit flipped it to `attested: false` with "the
 content is NOT what was attested." Large files use the precomputed-hash path —
 hash a 4 GB model locally, attest the digest.
 
+## Quantum-resistant by construction
+
+The proof itself is a **SHA-256 commitment**, and hash commitments are the part
+of cryptography that quantum computing barely touches. Shor's algorithm breaks
+the elliptic-curve signatures that secure wallets; against a hash, the best
+known quantum attack (Grover's) merely halves the security margin — leaving
+~128 bits, still far beyond reach. An attestation written today stays verifiable
+straight through the post-quantum transition: **the proof outlives the
+cryptography that signed it.**
+
+The honest asymmetry: the *signature* layer — the key that paid the transaction
+fee, and the Digi-ID identity if you attached one — is classical ECC, the layer
+the industry is now migrating to post-quantum algorithms. Your commitments never
+need that migration. They were never signature-based to begin with.
+
 ## Tools
 
 | Tool | What it does |
