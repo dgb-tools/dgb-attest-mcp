@@ -1,25 +1,31 @@
 # dgb-attest-mcp
 
-**On-chain attestation for the AI era.** Hash any content onto the DigiByte
-blockchain — a permanent, timestamped, tamper-evident proof that it existed, in
-exactly that form, at that moment. Verify it anytime, with nothing but the chain.
+**Timestamped commitments on DigiByte.** Record the SHA-256 hash of any content in
+a DigiByte transaction — a tamper-evident, timestamped commitment that these exact
+bytes existed no later than the block that included it. Check it later with nothing
+but the chain.
 
-An [MCP](https://modelcontextprotocol.io) server, so an AI agent can notarize its
-own outputs (or check someone else's) as naturally as it reads a file.
+An [MCP](https://modelcontextprotocol.io) server, so an AI agent can commit a hash of
+its own outputs (or check someone else's) as naturally as it reads a file.
 
-> As AI floods the world with generated content, "can you prove where this came
-> from, and that it hasn't been altered?" stops being abstract. This is the
-> simplest useful answer: a hash on a public, decentralized, immutable ledger.
+> As AI floods the world with generated content, "did these bytes exist before that
+> date, and have they changed since?" stops being abstract. This is the simplest
+> useful answer: a hash recorded in a public, decentralized chain.
 
-## What it proves — and what it doesn't
+## What a commitment establishes — and what it doesn't
 
-- **Proves:** this exact content existed at or before the block's timestamp, and
-  has not changed since. Change one character and the hash — and the proof — no
-  longer match.
-- **Does not prove:** *who* created it, or that the content is *true*.
+- **Establishes:** these exact bytes existed no later than the block that included
+  the transaction (block time is an inclusion bound, not a clock), and whether a copy
+  you hold now matches them. Change one character and the hashes no longer match.
+- **Does not establish:** *who* created the content, that it is *true*, or that it
+  was the only version.
 - **For "who,"** pair it with [dgb-digiid-mcp](https://github.com/dgb-tools/dgb-digiid-mcp):
-  attest the content, then sign the attestation txid with your Digi-ID identity.
-  Now you have *what*, *when*, and *who* — all on-chain, no central authority.
+  commit the content, then sign the commitment's txid with your Digi-ID key. That
+  binds a key to the commitment; it does not establish legal identity or authorship.
+
+This README says *commitment* and *timestamped*, not *proof*, *verified* or
+*notarized*, on purpose: a hash in a block bounds when bytes existed. Nothing here
+vouches for what they mean.
 
 ## How it works
 
@@ -35,20 +41,20 @@ later: verify(txid, "my report")  ──▶  same hash? attested ✓  + block ti
        verify(txid, "my rep0rt")  ──▶  mismatch → NOT attested ✗
 ```
 
-**Proven on testnet:** attested a document, verified the exact text (`attested:
+**Exercised on testnet:** committed a document, checked the exact text (`attested:
 true`), and a one-character edit flipped it to `attested: false` with "the
 content is NOT what was attested." Large files use the precomputed-hash path —
 hash a 4 GB model locally, attest the digest.
 
 ## Quantum-resistant by construction
 
-The proof itself is a **SHA-256 commitment**, and hash commitments are the part
+The commitment itself is a **SHA-256 hash**, and hash commitments are the part
 of cryptography that quantum computing barely touches. Shor's algorithm breaks
 the elliptic-curve signatures that secure wallets; against a hash, the best
 known quantum attack (Grover's) merely halves the security margin — leaving
-~128 bits, still far beyond reach. An attestation written today stays verifiable
-straight through the post-quantum transition: **the proof outlives the
-cryptography that signed it.**
+~128 bits, still far beyond reach. A commitment written today stays checkable
+straight through the post-quantum transition: **the commitment outlives the
+cryptography that signed the transaction.**
 
 The honest asymmetry: the *signature* layer — the key that paid the transaction
 fee, and the Digi-ID identity if you attached one — is classical ECC, the layer
@@ -67,7 +73,8 @@ need that migration. They were never signature-based to begin with.
 
 - **Testnet by default.** Attesting spends a fee, so the server refuses to run
   against mainnet unless you set `ATTEST_ALLOW_MAINNET=true`. (Mainnet *is* the
-  real use — permanent public attestations — so that opt-in is deliberate.)
+  real use — public commitments that stay in the chain's history — so that opt-in
+  is deliberate.)
 - **Daily cap** (`ATTEST_MAX_DAILY`, default 50) so an agent can't spam the chain
   or burn through fees in a loop.
 - **Your content never leaves your machine** — only its hash.
@@ -86,7 +93,7 @@ Add to your MCP client (`npx dgb-attest-mcp`), env: `DGB_RPC_URL`, `DGB_RPC_USER
 
 ## Related
 
-- [dgb-digiid-mcp](https://github.com/dgb-tools/dgb-digiid-mcp) — identity: prove *who* attested.
+- [dgb-digiid-mcp](https://github.com/dgb-tools/dgb-digiid-mcp) — identity: bind a Digi-ID key to a commitment.
 - [dgb-chain-mcp](https://github.com/dgb-tools/dgb-chain-mcp) — read the chain.
 - [dgb-digidollar-mcp](https://github.com/dgb-tools/dgb-digidollar-mcp) — pay in DigiDollar.
 
