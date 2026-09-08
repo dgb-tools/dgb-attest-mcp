@@ -1,7 +1,7 @@
 {
   "name": "dgb-attest-mcp",
   "version": "0.1.0",
-  "description": "On-chain attestation for the AI era: hash any content onto DigiByte via OP_RETURN — a permanent, timestamped, tamper-evident proof it existed. Verify anytime.",
+  "description": "Timestamped SHA-256 commitments on DigiByte via OP_RETURN: record a content hash in a transaction, check it later against the chain. Bounds when bytes existed; does not establish who made them or whether they are true.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +10,7 @@
     "digibyte",
     "attestation",
     "provenance",
-    "notarization",
+    "timestamped-commitment",
     "op_return",
     "mcp",
     "ai-agents",

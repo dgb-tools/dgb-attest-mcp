@@ -43,7 +43,7 @@ function checkDailyCap() {
 // --- attest ---------------------------------------------------------------
 server.tool(
   "attest",
-  "Write a permanent, timestamped attestation of content onto the DigiByte chain. " +
+  "Record a timestamped SHA-256 commitment of content in a DigiByte transaction (bounds when the bytes existed; does not establish who made them or whether they are true). " +
     "Pass either `content` (text — hashed with sha256 here; the content itself never " +
     "goes on-chain or leaves this machine) or `sha256` (a precomputed digest of a " +
     "file). Returns the attestation txid. Costs a tiny transaction fee.",
